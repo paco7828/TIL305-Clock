@@ -1,12 +1,13 @@
 6x TIL305
 6x Led driver - https://www.hestore.hu/prod_10045932.html
-36x 150R 0805 resistor - https://www.hestore.hu/prod_10001149.html
+6x 16k resistor - https://www.hestore.hu/prod_10025894.html
 1x MCU - https://www.hestore.hu/prod_10048018.html
 1x RTC module - https://www.hestore.hu/prod_10038042.html
 1x DS3231M - https://www.aliexpress.com/item/1005008686698228.html?spm=a2g0o.productlist.main.3.2b1a1b72EXxn4C&algo_pvid=93a4b71a-9d60-4086-bd4a-33e7217feff6&algo_exp_id=93a4b71a-9d60-4086-bd4a-33e7217feff6-2&pdp_ext_f=%7B%22order%22%3A%2210%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21HUF%211323.05%21472.76%21%21%213.89%211.39%21%40211b80c217665884028808694e67f1%2112000046240769312%21sea%21HU%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A7de61104%3Bm03_new_user%3A-29895%3BpisId%3A5000000187448270&curPageLogUid=onRz5161ymKB&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008686698228%7C_p_origin_prod%3A
 2x 4.7kR 0805 resistor - https://www.hestore.hu/prod_10001183.html
 1x CR2032 Battery - https://www.hestore.hu/prod_10001070.html
 1x CR2032 Battery holder - https://www.hestore.hu/prod_10045258.html
-2x 100nF 0805 capacitor - https://www.hestore.hu/prod_10001122.html
-1x 10uF 0805 capacitor - https://www.hestore.hu/prod_10032047.html
+8x 100nF 0805 capacitor - https://www.hestore.hu/prod_10001122.html
+7x 10uF 0805 capacitor - https://www.hestore.hu/prod_10032047.html
 1x Buzzer - https://www.hestore.hu/prod_10044010.html
+2x Button - https://www.hestore.hu/prod_10043772.html
