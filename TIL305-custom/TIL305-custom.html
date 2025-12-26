@@ -1,313 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TIL305 LED Pattern Designer</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1a1a1a;
-            color: white;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #00ff00;
-            margin-bottom: 30px;
-        }
-        
-        .matrix-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 30px 0;
-        }
-        
-        .matrix {
-            display: grid;
-            grid-template-columns: repeat(7, 40px);
-            grid-template-rows: repeat(5, 40px);
-            gap: 10px;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .led {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #666;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #999;
-        }
-        
-        .led.off {
-            background-color: #222;
-        }
-        
-        .led.on {
-            background-color: #ff0000;
-            border-color: #ff4444;
-            box-shadow: 0 0 10px #ff0000;
-        }
-        
-        .led:hover {
-            border-color: #00ff00;
-            transform: scale(1.1);
-        }
-        
-        .decimal-point {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid #666;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-left: 10px;
-            align-self: flex-end;
-            margin-bottom: 10px;
-        }
-        
-        .decimal-point.off {
-            background-color: #222;
-        }
-        
-        .decimal-point.on {
-            background-color: #ff0000;
-            border-color: #ff4444;
-            box-shadow: 0 0 10px #ff0000;
-        }
-        
-        .decimal-point:hover {
-            border-color: #00ff00;
-            transform: scale(1.2);
-        }
-        
-        .controls {
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        button {
-            background-color: #333;
-            color: white;
-            border: 2px solid #666;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        button:hover {
-            background-color: #555;
-            border-color: #00ff00;
-        }
-        
-        .code-output {
-            background-color: #000;
-            border: 2px solid #333;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            white-space: pre-wrap;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .matrix-display {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        
-        .labels {
-            margin: 10px 0;
-            text-align: center;
-            color: #888;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #1a1a1a;
+        color: white;
+      }
+
+      h1 {
+        text-align: center;
+        color: #00ff00;
+        margin-bottom: 30px;
+      }
+
+      .matrix-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 30px 0;
+      }
+
+      .matrix {
+        display: grid;
+        grid-template-columns: repeat(5, 40px);
+        grid-template-rows: repeat(7, 40px);
+        gap: 10px;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .led {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #666;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        color: #999;
+      }
+
+      .led.off {
+        background-color: #222;
+      }
+
+      .led.on {
+        background-color: #ff0000;
+        border-color: #ff4444;
+        box-shadow: 0 0 10px #ff0000;
+      }
+
+      .led:hover {
+        border-color: #00ff00;
+        transform: scale(1.1);
+      }
+
+      .decimal-point {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #666;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+      }
+
+      .decimal-point.off {
+        background-color: #222;
+      }
+
+      .decimal-point.on {
+        background-color: #ff0000;
+        border-color: #ff4444;
+        box-shadow: 0 0 10px #ff0000;
+      }
+
+      .decimal-point:hover {
+        border-color: #00ff00;
+        transform: scale(1.2);
+      }
+
+      .controls {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      button {
+        background-color: #333;
+        color: white;
+        border: 2px solid #666;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #555;
+        border-color: #00ff00;
+      }
+
+      .code-output {
+        background-color: #000;
+        border: 2px solid #333;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 20px 0;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        white-space: pre-wrap;
+        max-height: 400px;
+        overflow-y: auto;
+        visibility: hidden;
+      }
+
+      .labels {
+        margin: 10px 0;
+        text-align: center;
+        color: #888;
+      }
     </style>
-</head>
-<body>
-    <h1>🔴 TIL305 LED Pattern Designer</h1>
-    
+  </head>
+  <body>
+    <h1>TIL305 Pattern Designer</h1>
+
     <div class="labels">
-        <p>Click LEDs to toggle them ON/OFF</p>
-        <p>Columns: 1-7 (left to right) | Rows: 1-5 (top to bottom)</p>
-    </div>
-    
-    <div class="matrix-container">
-        <div class="matrix-display">
-            <div class="matrix" id="ledMatrix">
-                <!-- LEDs will be generated by JavaScript -->
-            </div>
-            <div class="decimal-point off" id="decimalPoint" title="Decimal Point"></div>
-        </div>
-    </div>
-    
-    <div class="controls">
-        <button onclick="clearAll()">Clear All</button>
-        <button onclick="setAll()">Set All</button>
-        <button onclick="generateCode()">Generate Arduino Code</button>
-        <button onclick="copyCode()">Copy Code</button>
-    </div>
-    
-    <div class="code-output" id="codeOutput">
-// Your Arduino code will appear here...
-// Click "Generate Arduino Code" to create the pattern
+      <p>Click LEDs to toggle ON/OFF</p>
+      <p>Display stands vertically</p>
     </div>
 
+    <div class="matrix-container">
+      <div class="matrix" id="ledMatrix"></div>
+      <div
+        class="decimal-point off"
+        id="decimalPoint"
+        title="Decimal Point (bottom right)"
+      ></div>
+    </div>
+
+    <div class="controls">
+      <button onclick="clearAll()">Clear All</button>
+      <button onclick="setAll()">Set All</button>
+      <button onclick="generateCode()">Generate Arduino Code</button>
+      <button onclick="copyCode()">Copy Code</button>
+    </div>
+
+    <div class="code-output" id="codeOutput"></div>
+
     <script>
-        // LED matrix state (7 columns x 5 rows)
-        let ledState = [];
-        let decimalState = false;
-        
-        // Initialize matrix
-        function initMatrix() {
-            ledState = Array(5).fill().map(() => Array(7).fill(false));
-            createLEDs();
+      let ledState = [];
+      let decimalState = false;
+
+      function initMatrix() {
+        ledState = Array(7)
+          .fill()
+          .map(() => Array(5).fill(false));
+        createLEDs();
+      }
+
+      function createLEDs() {
+        const matrix = document.getElementById("ledMatrix");
+        matrix.innerHTML = "";
+
+        // Create 7 rows × 5 columns
+        for (let row = 0; row < 7; row++) {
+          for (let col = 0; col < 5; col++) {
+            const led = document.createElement("div");
+            led.className = "led off";
+            led.dataset.row = row;
+            led.dataset.col = col;
+            led.title = `Row ${row + 1}, Col ${col + 1}`;
+            led.textContent = `R${row + 1}C${col + 1}`;
+
+            led.addEventListener("click", () => toggleLED(row, col));
+            matrix.appendChild(led);
+          }
         }
-        
-        // Create LED elements
-        function createLEDs() {
-            const matrix = document.getElementById('ledMatrix');
-            matrix.innerHTML = '';
-            
-            for (let row = 0; row < 5; row++) {
-                for (let col = 0; col < 7; col++) {
-                    const led = document.createElement('div');
-                    led.className = 'led off';
-                    led.dataset.row = row;
-                    led.dataset.col = col;
-                    led.title = `Row ${row + 1}, Col ${col + 1}`;
-                    led.textContent = `R${row + 1}C${col + 1}`;
-                    
-                    led.addEventListener('click', () => toggleLED(row, col));
-                    matrix.appendChild(led);
-                }
-            }
-            
-            // Decimal point
-            const decimal = document.getElementById('decimalPoint');
-            decimal.addEventListener('click', toggleDecimal);
-        }
-        
-        // Toggle individual LED
-        function toggleLED(row, col) {
-            ledState[row][col] = !ledState[row][col];
-            updateDisplay();
-        }
-        
-        // Toggle decimal point
-        function toggleDecimal() {
-            decimalState = !decimalState;
-            updateDisplay();
-        }
-        
-        // Update visual display
-        function updateDisplay() {
-            const leds = document.querySelectorAll('.led');
-            leds.forEach(led => {
-                const row = parseInt(led.dataset.row);
-                const col = parseInt(led.dataset.col);
-                led.className = ledState[row][col] ? 'led on' : 'led off';
-            });
-            
-            const decimal = document.getElementById('decimalPoint');
-            decimal.className = decimalState ? 'decimal-point on' : 'decimal-point off';
-        }
-        
-        // Clear all LEDs
-        function clearAll() {
-            ledState = Array(5).fill().map(() => Array(7).fill(0));
-            decimalState = false;
-            updateDisplay();
-        }
-        
-        // Set all LEDs
-        function setAll() {
-            ledState = Array(5).fill().map(() => Array(7).fill(1));
-            decimalState = true;
-            updateDisplay();
-        }
-        
-        // Generate Arduino code
-        function generateCode() {
-            let code = `/*
+
+        const decimal = document.getElementById("decimalPoint");
+        decimal.addEventListener("click", toggleDecimal);
+        updateDisplay();
+      }
+
+      function toggleLED(row, col) {
+        ledState[row][col] = !ledState[row][col];
+        updateDisplay();
+      }
+
+      function toggleDecimal() {
+        decimalState = !decimalState;
+        updateDisplay();
+      }
+
+      function updateDisplay() {
+        const leds = document.querySelectorAll(".led");
+        leds.forEach((led) => {
+          const row = parseInt(led.dataset.row);
+          const col = parseInt(led.dataset.col);
+          led.className = ledState[row][col] ? "led on" : "led off";
+        });
+
+        const decimal = document.getElementById("decimalPoint");
+        decimal.className = decimalState
+          ? "decimal-point on"
+          : "decimal-point off";
+      }
+
+      function clearAll() {
+        ledState = Array(7)
+          .fill()
+          .map(() => Array(5).fill(false));
+        decimalState = false;
+        updateDisplay();
+      }
+
+      function setAll() {
+        ledState = Array(7)
+          .fill()
+          .map(() => Array(5).fill(true));
+        decimalState = true;
+        updateDisplay();
+      }
+
+      function generateCode() {
+        let code = `/*
+
 --- WIRING ---
 TIL305 -> MCU
 
-Rows:
-!!! Use 150R / 220R resistors!!!
-IO0 -> pin 1 (row3)
-IO1 -> pin 6 (row1)
-IO2 -> pin 7 (row2)
-IO3 -> pin 8 (row4)
-IO4 -> pin 12 (row5)
-IO5 -> pin 13 (row6)
+Columns (active HIGH):
+!!! Use 150R / 220R resistors on ALL row pins!!!
+TIL305 Pin 12 -> IO10 (col 1)
+TIL305 Pin 8  -> IO9  (col 2)
+TIL305 Pin 1  -> IO20 (col 3)
+TIL305 Pin 7  -> IO21 (col 4)
+TIL305 Pin 6  -> IO8  (col 5)
 
-Columns:
-IO6 -> pin 2 (col7)
-IO7 -> pin 3 (col6)
-IO8 -> pin 4 (col5)
-IO9 -> pin 11 (col2)
-IO10 -> pin 10 (col1)
-IO20 -> pin 5 (col3)
-IO21 -> pin 9 (col4)
+Rows (active LOW):
+TIL305 Pin 2  -> IO0 (row 1)
+TIL305 Pin 3  -> IO1 (row 2)
+TIL305 Pin 4  -> IO2 (row 3)
+TIL305 Pin 11 -> IO3 (row 4)
+TIL305 Pin 10 -> IO4 (row 5)
+TIL305 Pin 5  -> IO5 (row 6)
+TIL305 Pin 9  -> IO6 (row 7)
+
+Decimal Point:
+TIL305 Pin 13 -> IO7
 */
 
 // Pin definitions
-const int rowPins[6] = { 1, 2, 0, 3, 4, 5 };        // Rows 1-6
-const int colPins[7] = { 10, 9, 20, 21, 8, 7, 6 };  // Cols 1-7
+const int rowPins[7] = { 0, 1, 2, 3, 4, 5, 6 };
+const int colPins[5] = { 10, 9, 20, 21, 8 };
 
 // Matrix dimensions
-const int COLS = 7;
-const int ROWS = 5;
+const int COLS = 5;
+const int ROWS = 7;
 
-// Your custom pattern
-bool pattern[5][7] = {
+// Custom pattern [7 rows][5 columns]
+bool pattern[7][5] = {
 `;
 
-            // Generate pattern array
-            for (let row = 0; row < 5; row++) {
-                code += '  { ';
-                for (let col = 0; col < 7; col++) {
-                    code += ledState[row][col] ? '1' : '0';
-                    if (col < 6) code += ', ';
-                }
-                code += ' }';
-                if (row < 4) code += ',';
-                code += `  // Row ${row + 1}\n`;
-            }
-
-            code += `};
+        // Generate pattern array - 7 rows × 5 columns
+        for (let row = 0; row < 7; row++) {
+          code += "  { ";
+          for (let col = 0; col < 5; col++) {
+            const reversedCol = 4 - col;
+            code += ledState[row][reversedCol] ? "1" : "0";
+            if (col < 4) code += ", ";
+          }
+          code += " }";
+          if (row < 6) code += ",";
+          code += `\n`;
+        }
+        code += `};
 
 bool decimalOn = ${decimalState};
 
 void setup() {
-  // Set up row pins (active HIGH)
-  for (int i = 0; i < 6; i++) {
+  // Set up row pins (active LOW)
+  for (int i = 0; i < ROWS; i++) {
     pinMode(rowPins[i], OUTPUT);
-    digitalWrite(rowPins[i], LOW);
+    digitalWrite(rowPins[i], HIGH);
   }
 
-  // Set up column pins (active LOW)
+  // Set up column pins (active HIGH)
   for (int i = 0; i < COLS; i++) {
     pinMode(colPins[i], OUTPUT);
-    digitalWrite(colPins[i], HIGH);
+    digitalWrite(colPins[i], LOW);
   }
 }
 
@@ -316,53 +309,64 @@ void loop() {
 }
 
 void displayPattern() {
-  // Multiplexing: scan through each row
+  // Scan through each row
   for (int row = 0; row < ROWS; row++) {
     // Turn off everything
     allOff();
     
     // Set column states for this row
     for (int col = 0; col < COLS; col++) {
-      digitalWrite(colPins[col], pattern[row][col] ? LOW : HIGH);
+      digitalWrite(colPins[col], pattern[row][col] ? HIGH : LOW);
     }
     
     // Turn on current row
-    digitalWrite(rowPins[row], HIGH);
-    
-    delay(2); // Brief delay for persistence of vision
+    digitalWrite(rowPins[row], LOW);
   }
   
-  // Handle decimal point (row 6, col 6 - IO5, IO7)
+  // Handle decimal point
   if (decimalOn) {
     allOff();
-    digitalWrite(colPins[5], LOW);  // Col 6 (IO7)
-    digitalWrite(rowPins[5], HIGH); // Row 6 (IO5) 
-    delay(2);
+    digitalWrite(7, HIGH);
+    digitalWrite(rowPins[6], LOW);
   }
-}`;
+}
 
-            document.getElementById('codeOutput').textContent = code;
-        }
-        
-        // Copy code to clipboard
-        function copyCode() {
-            const code = document.getElementById('codeOutput').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                alert('Code copied to clipboard!');
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = code;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('Code copied to clipboard!');
-            });
-        }
-        
-        // Initialize on page load
-        initMatrix();
+void allOff() {
+  // Turn off all rows
+  for (int i = 0; i < ROWS; i++) {
+    digitalWrite(rowPins[i], HIGH);
+  }
+
+  // Turn off all columns
+  for (int i = 0; i < COLS; i++) {
+    digitalWrite(colPins[i], LOW);
+  }
+}
+`;
+
+        document.getElementById("codeOutput").style.visibility = "visible";
+        document.getElementById("codeOutput").textContent = code;
+      }
+
+      function copyCode() {
+        const code = document.getElementById("codeOutput").textContent;
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            alert("Code copied to clipboard!");
+          })
+          .catch(() => {
+            const textArea = document.createElement("textarea");
+            textArea.value = code;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            alert("Code copied to clipboard!");
+          });
+      }
+
+      initMatrix();
     </script>
-</body>
+  </body>
 </html>
