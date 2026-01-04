@@ -10,4 +10,6 @@
 8x 100nF 0805 capacitor - https://www.hestore.hu/prod_10001122.html
 7x 10uF 0805 capacitor - https://www.hestore.hu/prod_10032047.html
 1x Buzzer - https://www.hestore.hu/prod_10044010.html
-2x Button - https://www.hestore.hu/prod_10043772.html
+1x JoyStick - https://www.hestore.hu/prod_10035502.html
+1x DIP switch - https://www.hestore.hu/prod_10022003.html
+1x B4B-XH-A - https://www.hestore.hu/prod_10041551.html
