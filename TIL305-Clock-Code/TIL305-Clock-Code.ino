@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <RTClib.h>
 #include "MAX7219-Daisy.h"
+#include "Better-Joystick.h"
 
 // Config
 constexpr uint8_t DIN_PIN = 3;
@@ -10,9 +11,14 @@ constexpr uint8_t CLK_PIN = 5;
 constexpr uint8_t SDA_PIN = 6;
 constexpr uint8_t SCL_PIN = 7;
 constexpr uint8_t NUM_DEVICES = 6;
+const uint8_t JS_SW = 1;
+const uint8_t JS_X = 0;
+const uint8_t JS_Y = 2;
+const uint8_t BUZZER = 8;
 
 MAX7219Daisy display;
 RTC_DS3231 rtc;
+BetterJoystick joystick;
 
 void setup() {
   Serial.begin(115200);
@@ -26,6 +32,10 @@ void setup() {
     while (1)
       ;
   }
+
+  pinMode(BUZZER, OUTPUT);
+
+  joystick.begin(JS_SW, JS_X, JS_Y);
 
   if (rtc.lostPower()) {
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
