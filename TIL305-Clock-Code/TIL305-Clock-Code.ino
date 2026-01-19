@@ -3,22 +3,27 @@
 #include <RTClib.h>
 #include "MAX7219-Daisy.h"
 #include "Better-Joystick.h"
+#include "Better-GPS.h"
 
 // Config
+const uint8_t JS_X = 0;
+const uint8_t JS_SW = 1;
+const uint8_t JS_Y = 2;
 constexpr uint8_t DIN_PIN = 3;
 constexpr uint8_t CS_PIN = 4;
 constexpr uint8_t CLK_PIN = 5;
 constexpr uint8_t SDA_PIN = 6;
 constexpr uint8_t SCL_PIN = 7;
-constexpr uint8_t NUM_DEVICES = 6;
-const uint8_t JS_SW = 1;
-const uint8_t JS_X = 0;
-const uint8_t JS_Y = 2;
 const uint8_t BUZZER = 8;
+const uint8_t GPS_RX = 9;
+const uint8_t GPS_TX = 10;
+constexpr uint8_t NUM_DEVICES = 6;
+constexpr unsigned long GPS_BAUD = 9600UL;
 
 MAX7219Daisy display;
 RTC_DS3231 rtc;
 BetterJoystick joystick;
+BetterGPS gps;
 
 void setup() {
   Serial.begin(115200);
@@ -33,13 +38,15 @@ void setup() {
       ;
   }
 
+  if (rtc.lostPower()) {
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+
   pinMode(BUZZER, OUTPUT);
 
   joystick.begin(JS_SW, JS_X, JS_Y);
 
-  if (rtc.lostPower()) {
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  }
+  gps.begin(GPS_RX, GPS_TX, GPS_BAUD);
 }
 
 void loop() {
