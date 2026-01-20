@@ -257,7 +257,7 @@ public:
   }
 
   unsigned long getLocationAge(){
-    return gps.locationAge();
+    return gps.location.age();
   }
 
   float getHdop() {

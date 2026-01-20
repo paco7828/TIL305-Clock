@@ -36,6 +36,22 @@ private:
     digitalWrite(csPin, HIGH);
   }
 
+  void writeToDevice(uint8_t deviceIndex, byte reg, byte data) {
+    digitalWrite(csPin, LOW);
+
+    for (int i = numberOfDevices - 1; i >= 0; i--) {
+      if (i == deviceIndex) {
+        shiftOut(dinPin, clkPin, MSBFIRST, reg);
+        shiftOut(dinPin, clkPin, MSBFIRST, data);
+      } else {
+        shiftOut(dinPin, clkPin, MSBFIRST, REG_NOOP);
+        shiftOut(dinPin, clkPin, MSBFIRST, 0x00);
+      }
+    }
+
+    digitalWrite(csPin, HIGH);
+  }
+
 public:
   void begin(uint8_t dinPin, uint8_t clkPin, uint8_t csPin, uint8_t numberOfDevices) {
     this->dinPin = dinPin;
@@ -58,7 +74,7 @@ public:
     writeToAllDevices(REG_SHUTDOWN, 0x00);
     writeToAllDevices(REG_DISPLAYTEST, 0x00);
     writeToAllDevices(REG_DECODE, 0x00);
-    writeToAllDevices(REG_SCANLIMIT, 0x06);
+    writeToAllDevices(REG_SCANLIMIT, 0x07);  // Changed to 0x07 to use all 8 rows
     writeToAllDevices(REG_INTENSITY, 0x0F);
     writeToAllDevices(REG_SHUTDOWN, 0x01);
 
@@ -80,6 +96,9 @@ public:
 
       displayBuffer[deviceIndex][row] = rowData;
     }
+
+    // Clear row 7 (the LED row) for this device
+    displayBuffer[deviceIndex][7] = 0x00;
   }
 
   void displayLetter(uint8_t deviceIndex, char letter) {
@@ -105,6 +124,9 @@ public:
 
       displayBuffer[deviceIndex][row] = rowData;
     }
+
+    // Clear row 7 (the LED row) for this device
+    displayBuffer[deviceIndex][7] = 0x00;
   }
 
   void displayText(const char* text) {
@@ -139,13 +161,58 @@ public:
     if (deviceIndex >= numberOfDevices)
       return;
 
-    for (int row = 0; row < 7; row++) {
+    for (int row = 0; row < 8; row++) {
       displayBuffer[deviceIndex][row] = 0x00;
     }
   }
 
+  // Set the colon LED (left LED on row 7)
+  void setColonLED(uint8_t deviceIndex, bool state) {
+    if (deviceIndex >= numberOfDevices)
+      return;
+
+    if (state) {
+      displayBuffer[deviceIndex][7] |= 0x02;  // Set bit 1 (left LED)
+    } else {
+      displayBuffer[deviceIndex][7] &= ~0x02;  // Clear bit 1
+    }
+  }
+
+  // Set the decimal point LED (right LED on row 7)
+  void setDecimalPointLED(uint8_t deviceIndex, bool state) {
+    if (deviceIndex >= numberOfDevices)
+      return;
+
+    if (state) {
+      displayBuffer[deviceIndex][7] |= 0x80;  // Set bit 7 (right LED)
+    } else {
+      displayBuffer[deviceIndex][7] &= ~0x80;  // Clear bit 7
+    }
+  }
+
+  // Set the degree symbol on row 0 and row 1
+  void setDegreeSymbol(uint8_t deviceIndex, bool state) {
+    if (deviceIndex >= numberOfDevices)
+      return;
+
+    if (state) {
+      displayBuffer[deviceIndex][0] = 0x18;  // Bits 3 and 4 for top of degree
+      displayBuffer[deviceIndex][1] = 0x18;  // Bits 3 and 4 for bottom of degree
+    } else {
+      displayBuffer[deviceIndex][0] = 0x00;
+      displayBuffer[deviceIndex][1] = 0x00;
+    }
+  }
+
+  // Clear all LEDs (row 7) on all devices
+  void clearAllLEDs() {
+    for (uint8_t i = 0; i < numberOfDevices; i++) {
+      displayBuffer[i][7] = 0x00;
+    }
+  }
+
   void refresh() {
-    for (uint8_t row = 0; row < 7; row++) {
+    for (uint8_t row = 0; row < 8; row++) {  // Changed to 8 rows
       digitalWrite(csPin, LOW);
 
       for (int i = numberOfDevices - 1; i >= 0; i--) {
@@ -159,7 +226,7 @@ public:
 
   void clearDisplay() {
     for (uint8_t i = 0; i < numberOfDevices; i++) {
-      for (int row = 0; row < 7; row++) {
+      for (int row = 0; row < 8; row++) {  // Changed to 8 rows
         displayBuffer[i][row] = 0x00;
       }
     }
